@@ -195,7 +195,7 @@ struct MovieGrid : View {
     
     var body : some View{
         VStack(spacing: 0) {
-            if numItems == 0{
+            if numItems == 0 || self.filteredList.count == 0{
                 Text("No Data Found")
             }
             else{
