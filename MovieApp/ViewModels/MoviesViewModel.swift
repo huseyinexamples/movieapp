@@ -13,7 +13,7 @@ class MoviesViewModel: ObservableObject {
     @Published var state = ServiceStates.loading{
         didSet{
             if isFirstPage{
-                
+    
             }
         }
     }
