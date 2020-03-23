@@ -13,6 +13,7 @@ struct MovieDetailView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     var movie : Movie
     var index : Int
+    @State var isFavorite : Bool = false
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
@@ -41,6 +42,7 @@ struct MovieDetailView: View {
         .navigationBarItems(trailing: VStack{
             Button(action: {
                 self.filteredList[self.index].isFavorite.toggle()
+                self.isFavorite =  self.filteredList[self.index].isFavorite
                 Helpers.setFavorite(id: self.movie.id, isFavorite: self.movie.isFavorite)
                 
             }) {

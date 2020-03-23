@@ -10,15 +10,16 @@ import SwiftUI
 struct ImageWithCache<ImageView: View>: View {
     private let url: URL
     private let imageView: (Image) -> ImageView
+    @State var image : UIImage?
     @ObservedObject private var loader: ImageLoaderViewModel = ImageLoaderViewModel()
     
-    var body: AnyView {
-        return AnyView(
-            self.imageView(Image(uiImage: loader.image ?? UIImage.init()))
-            .onAppear {
-                self.loader.fetchImage(atURL: self.url)
-            }
-        )
+    var body: some View {
+        self.imageView(Image(uiImage: self.image ?? UIImage.init()))
+        .onAppear {
+            self.loader.fetchImage(atURL: self.url,completionImage: { image in
+                self.image = image
+            })
+        }
         
     }
     

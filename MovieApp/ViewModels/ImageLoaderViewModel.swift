@@ -12,16 +12,11 @@ class ImageLoaderViewModel: ObservableObject {
     private var cancellable: AnyCancellable?
     
     static let cache = NSCache<NSURL, UIImage>()
-    @Published var image : UIImage?{
-        didSet{
-            self.objectWillChange.send()
-        }
-    }
-    func fetchImage(atURL url: URL) {
-        cancellable?.cancel()
+
+    func fetchImage(atURL url: URL,completionImage : @escaping (UIImage?)->Void) {
         
         if let image = ImageLoaderViewModel.cache.object(forKey: url as NSURL){
-            self.image = image
+            completionImage(image)
             return
         }
         
@@ -34,7 +29,7 @@ class ImageLoaderViewModel: ObservableObject {
             .sink(receiveCompletion: { completion in
             }) { image in
                 if let image = image {
-                    self.image = image
+                    completionImage(image)
                     ImageLoaderViewModel.cache.setObject(image, forKey: url as NSURL)
                 }
         }
