@@ -197,7 +197,7 @@ struct MovieGrid : View {
         VStack(spacing: 0) {
             if numItems == 0 || self.filteredList.count == 0{
                 Text("No Data Found")
-            }
+            } 
             else{
                 ForEach(0 ..< (self.numItems / self.columns),id:\.self) { row in
                     HStack(spacing: 0) {
